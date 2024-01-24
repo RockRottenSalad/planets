@@ -75,6 +75,18 @@ void camera_t::rotate(double x, double y)
     this->direction = glm::normalize(this->direction);
 }
 
+void camera_t::lock()
+{
+    this->speed = 0.0f;
+    this->sensitivity = 0.0f;
+}
+
+void camera_t::unlock()
+{
+    this->speed = 0.0025f;
+    this->sensitivity = 0.5f;
+}
+
 float* camera_t::get_mat()
 {
     return glm::value_ptr(this->look_at);

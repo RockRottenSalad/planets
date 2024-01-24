@@ -28,6 +28,8 @@ class window_t
 
         void event_handler();
         void mouse_handler();
+
+//        bool cursor_enabled;
         
     public:
         GLFWwindow* window;

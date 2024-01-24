@@ -13,18 +13,38 @@ std::string shader_t::read_shader(std::string file_path)
 }
 
 shader_t::shader_t(std::string vertex_path, std::string frag_path)
+    :vertex_path(vertex_path), frag_path(frag_path)
 {
+    this->ptr = 0;
+    this->compile();
+//    this->projection_unf = glGetUniformLocation(this->ptr, "projection");
+}
+
+shader_t::~shader_t()
+{
+    glDeleteProgram(this->ptr);
+}
+
+void shader_t::use()
+{
+    glUseProgram(this->ptr);
+}
+
+void shader_t::compile()
+{
+ //   if(ptr != 0)
+//        glDeleteProgram(this->ptr);
     unsigned int vertex_shader, fragment_shader;
     std::string src;
     const char* c_str;
 
     vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    src = this->read_shader(vertex_path);
+    src = this->read_shader(this->vertex_path);
     glShaderSource(vertex_shader, 1, &(c_str = src.c_str()), NULL);
     glCompileShader(vertex_shader);
 
     fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    src = this->read_shader(frag_path);
+    src = this->read_shader(this->frag_path);
     glShaderSource(fragment_shader, 1, &(c_str = src.c_str()), NULL);
     glCompileShader(vertex_shader);
 
@@ -46,18 +66,6 @@ shader_t::shader_t(std::string vertex_path, std::string frag_path)
 
     this->camera_unf = glGetUniformLocation(this->ptr, "camera");
     this->time_unf = glGetUniformLocation(this->ptr, "e_time");
-
-//    this->projection_unf = glGetUniformLocation(this->ptr, "projection");
-}
-
-shader_t::~shader_t()
-{
-    glDeleteProgram(this->ptr);
-}
-
-void shader_t::use()
-{
-    glUseProgram(this->ptr);
 }
 
 void shader_t::set_uniform_m4(float* mat, std::string uniform)

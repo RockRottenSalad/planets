@@ -11,6 +11,7 @@ class shader_t
 {
     private:
         unsigned int ptr;
+        std::string vertex_path, frag_path;
 
         unsigned int camera_unf;
         unsigned int time_unf;
@@ -18,6 +19,7 @@ class shader_t
     public:
         shader_t(std::string vertex_path, std::string frag_path);
         ~shader_t();
+        void compile();
         void use();
 
         void set_uniform_m4(float* mat, std::string uniform);

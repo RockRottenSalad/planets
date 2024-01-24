@@ -26,7 +26,9 @@ window_t::window_t(std::string const win_title, glm::ivec2 resolution, std::uniq
 
     glViewport(0, 0, this->resolution.x, this->resolution.y);
     glClearColor(0.0, 0.0, 0.0, 1.0);
+
     glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//    this->cursor_enabled = false;
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     int monitor_x, monitor_y;
@@ -55,6 +57,25 @@ void window_t::event_handler()
 
     if(glfwGetKey(this->window, GLFW_KEY_A))
         this->camera->move_left();
+
+    if(glfwGetKey(this->window, GLFW_KEY_G))
+    {
+        this->camera->unlock();
+        glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    }
+
+    if(glfwGetKey(this->window, GLFW_KEY_T))
+    {
+        this->camera->lock();
+        glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
+    if(glfwGetKey(this->window, GLFW_KEY_R))
+    {
+        this->skybox_shader->compile();
+        this->shader->compile();
+    }
 
     return;
 }

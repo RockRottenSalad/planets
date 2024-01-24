@@ -26,6 +26,8 @@ class camera_t
         void move_right();
         void move_left();
         void rotate(double,double);
+        void lock();
+        void unlock();
 
         float* get_mat();
 };
